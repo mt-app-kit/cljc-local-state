@@ -1,8 +1,8 @@
 
 (ns local-state.side-effects
-    (:require [local-state.state :as state]
-              [fruits.map.api :refer [dissoc-in]]
-              [fruits.vector.api :as vector]))
+    (:require [fruits.map.api    :refer [dissoc-in]]
+              [fruits.vector.api :as vector]
+              [local-state.state :as state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
