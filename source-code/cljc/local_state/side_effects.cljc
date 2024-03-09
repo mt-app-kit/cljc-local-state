@@ -1,6 +1,8 @@
 
 (ns local-state.side-effects
-    (:require [local-state.state :as state]))
+    (:require [local-state.state :as state]
+              [fruits.map.api :refer [dissoc-in]]
+              [fruits.vector.api :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,13 +21,35 @@
   (letfn [(f0 [%] (apply f % params))]
          (swap! state/STATES update state-id f0)))
 
-(defn clear-state!
+(defn assoc-state!
   ; @description
-  ; Removes a specific state (from the 'STATES' atom).
+  ; Associates the given value as a specific state or optionally its nested value (in the 'STATES' atom).
   ;
   ; @param (keyword) state-id
+  ; @param (list of *)(opt) keys
+  ; @param (*) value
   ;
   ; @usage
-  ; (clear-state! :my-state)
-  [state-id]
-  (swap! state/STATES dissoc state-id))
+  ; (assoc-state! :my-state "My value")
+  ;
+  ; @usage
+  ; (assoc-state! :my-state :my-key "My value")
+  [state-id & ksnv]
+  (swap! state/STATES assoc-in (-> ksnv (vector/remove-last-item)
+                                        (vector/cons-item state-id))
+                               (-> ksnv (vector/last-item))))
+
+(defn dissoc-state!
+  ; @description
+  ; Dissociates a specific state or optionally its nested value (from the 'STATES' atom).
+  ;
+  ; @param (keyword) state-id
+  ; @param (list of *)(opt) keys
+  ;
+  ; @usage
+  ; (dissoc-state! :my-state)
+  ;
+  ; @usage
+  ; (dissoc-state! :my-state :my-key)
+  [state-id & keys]
+  (swap! state/STATES dissoc-in (vector/cons-item keys state-id)))

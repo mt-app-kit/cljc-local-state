@@ -12,8 +12,8 @@
 
 ; @redirect (local-state.side-effects/*)
 (def update-state! side-effects/update-state!)
-(def clear-state!  side-effects/clear-state!)
+(def assoc-state!  side-effects/assoc-state!)
+(def dissoc-state! side-effects/dissoc-state!)
 
 ; @redirect (local-state.state/*)
 (def STATES state/STATES)
-  
