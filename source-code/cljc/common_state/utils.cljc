@@ -1,6 +1,6 @@
 
 (ns common-state.utils
-    (:refer-clojure :exclude [atom cursor])
+    (:refer-clojure :exclude [atom])
     (:require [reagent.core]))
 
 ;; ----------------------------------------------------------------------------
@@ -8,14 +8,14 @@
 
 (defn atom
   ; @description
-  ; Returns a Clojure atom / Reagent atom object depends on whether it is called from a Clojure or a ClojureScript namespace.
+  ; Returns a Clojure atom object or a Reagent atom object, depending on whether it is called from a Clojure or a ClojureScript namespace.
   ;
   ; @param (*) v
   ;
   ; @usage
   ; (atom "My initial value")
   ; =>
-  ; #object[clojure.core.atom]
+  ; #object[reagent.core/atom]
   ;
   ; @return (atom)
   [v]
@@ -24,7 +24,7 @@
 
 (defn cursor
   ; @description
-  ; Returns a Clojure cursor / Reagent cursor object depends on whether it is called from a Clojure or a ClojureScript namespace.
+  ; Returns a Reagent cursor object, in case it is called from a ClojureScript namespace.
   ;
   ; @param (atom) a
   ; @param (vector) ks
@@ -32,9 +32,8 @@
   ; @usage
   ; (cursor MY-ATOM [:my-key])
   ; =>
-  ; #object[clojure.core.cursor]
+  ; #object[reagent.core/cursor]
   ;
   ; @return (cursor)
   [a ks]
-  #?(:clj  (clojure.core/cursor a ks)
-     :cljs (reagent.core/cursor a ks)))
+  #?(:cljs (reagent.core/cursor a ks)))
