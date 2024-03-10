@@ -18,9 +18,9 @@
   ;
   ; @usage
   ; (update-state! :my-context :my-state merge {...})
-  [context-id state-id f & params])
-  ;(letfn [(f0 [%] (apply f % params))]
-  ;       (swap! state/COMMON-STATE update-in [context-id state-id] f0)])
+  [context-id state-id f & params]
+  (letfn [(f0 [%] (apply f % params))]
+         (swap! state/COMMON-STATE update-in [context-id state-id] f0)))
 
 (defn assoc-state!
   ; @description
@@ -36,10 +36,10 @@
   ;
   ; @usage
   ; (assoc-state! :my-context :my-state :my-key "My value")
-  [context-id state-id & ksnv])
-  ;(swap! state/COMMON-STATE assoc-in (-> ksnv (vector/remove-last-item)
-  ;                                            (vector/cons-item state-id context-id)
-  ;                                   (-> ksnv (vector/last-item))])
+  [context-id state-id & ksnv]
+  (swap! state/COMMON-STATE assoc-in (-> ksnv (vector/remove-last-item)
+                                              (vector/cons-item state-id context-id))
+                                     (-> ksnv (vector/last-item))))
 
 (defn dissoc-state!
   ; @description
@@ -54,5 +54,5 @@
   ;
   ; @usage
   ; (dissoc-state! :my-context :my-state :my-key)
-  [context-id state-id & keys])
-  ;(swap! state/COMMON-STATE dissoc-in (vector/cons-item keys state-id context-id)))
+  [context-id state-id & keys]
+  (swap! state/COMMON-STATE dissoc-in (vector/cons-item keys state-id context-id)))

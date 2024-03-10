@@ -22,7 +22,7 @@
   [context-id state-id]
   (or (-> state/CURSORS deref (get-in [context-id state-id]))
       (when-let [cursor (utils/cursor state/COMMON-STATE [context-id state-id])]
-                (->> cursor (swap! state/CURSORS assoc state-id))
+                (->> cursor (swap! state/CURSORS assoc-in [context-id state-id]))
                 (->> cursor))))
 
 (defn get-state
