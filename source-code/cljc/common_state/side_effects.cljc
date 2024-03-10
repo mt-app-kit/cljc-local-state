@@ -1,15 +1,15 @@
 
-(ns local-state.side-effects
+(ns common-state.side-effects
     (:require [fruits.map.api    :refer [dissoc-in]]
               [fruits.vector.api :as vector]
-              [local-state.state :as state]))
+              [common-state.state :as state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn update-state!
   ; @description
-  ; Updates a specific state (in the 'STATES' atom) with the given 'f' function.
+  ; Updates a specific state (in the 'COMMON-STATE' atom) with the given 'f' function.
   ;
   ; @param (keyword) state-id
   ; @param (function) f
@@ -19,11 +19,11 @@
   ; (update-state! :my-state merge {...})
   [state-id f & params]
   (letfn [(f0 [%] (apply f % params))]
-         (swap! state/STATES update state-id f0)))
+         (swap! state/COMMON-STATE update state-id f0)))
 
 (defn assoc-state!
   ; @description
-  ; Associates the given value as a specific state or optionally its nested value (in the 'STATES' atom).
+  ; Associates the given value as a specific state or optionally its nested value (in the 'COMMON-STATE' atom).
   ;
   ; @param (keyword) state-id
   ; @param (list of *)(opt) keys
@@ -35,13 +35,13 @@
   ; @usage
   ; (assoc-state! :my-state :my-key "My value")
   [state-id & ksnv]
-  (swap! state/STATES assoc-in (-> ksnv (vector/remove-last-item)
-                                        (vector/cons-item state-id))
-                               (-> ksnv (vector/last-item))))
+  (swap! state/COMMON-STATE assoc-in (-> ksnv (vector/remove-last-item)
+                                              (vector/cons-item state-id))
+                                     (-> ksnv (vector/last-item))))
 
 (defn dissoc-state!
   ; @description
-  ; Dissociates a specific state or optionally its nested value (from the 'STATES' atom).
+  ; Dissociates a specific state or optionally its nested value (from the 'COMMON-STATE' atom).
   ;
   ; @param (keyword) state-id
   ; @param (list of *)(opt) keys
@@ -52,4 +52,4 @@
   ; @usage
   ; (dissoc-state! :my-state :my-key)
   [state-id & keys]
-  (swap! state/STATES dissoc-in (vector/cons-item keys state-id)))
+  (swap! state/COMMON-STATE dissoc-in (vector/cons-item keys state-id)))
