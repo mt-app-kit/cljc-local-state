@@ -27,7 +27,7 @@
 
 (defn get-state
   ; @description
-  ; Returns a specific state optionally filtered to a nested value.
+  ; Returns a specific state dereferenced and optionally filtered to a nested value.
   ;
   ; @param (*) context-id
   ; @param (*) state-id

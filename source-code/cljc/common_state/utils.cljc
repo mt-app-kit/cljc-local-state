@@ -30,7 +30,7 @@
   ; @param (vector) ks
   ;
   ; @usage
-  ; (cursor MY-ATOM [:my-key])
+  ; (cursor MY-ATOM [:my-context :my-state])
   ; =>
   ; #object[reagent.core/cursor]
   ;

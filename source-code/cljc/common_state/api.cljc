@@ -31,6 +31,6 @@
 (def COMMON-STATE state/COMMON-STATE)
 (def CURSORS      state/CURSORS)
 
-; @redirect (common-state.state/*)
+; @redirect (common-state.utils/*)
 (def atom   utils/atom)
 (def cursor utils/cursor)

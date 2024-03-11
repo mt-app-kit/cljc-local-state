@@ -19,7 +19,7 @@
 (def COMMON-STATE (utils/atom {}))
 
 ; @description
-; Stored cursors for states.
+; Stored cursors of states.
 ;
 ; @atom (map)
 ; {:my-context (map)

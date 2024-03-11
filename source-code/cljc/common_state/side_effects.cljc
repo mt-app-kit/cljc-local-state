@@ -35,7 +35,7 @@
   ; (assoc-state! :my-context :my-state "My value")
   ;
   ; @usage
-  ; (assoc-state! :my-context :my-state :my-key "My value")
+  ; (assoc-state! :my-context :my-state :my-key :my-nested-key ... "My value")
   [context-id state-id & ksnv]
   (swap! state/COMMON-STATE assoc-in (-> ksnv (vector/remove-last-item)
                                               (vector/cons-item state-id context-id))
@@ -53,6 +53,6 @@
   ; (dissoc-state! :my-context :my-state)
   ;
   ; @usage
-  ; (dissoc-state! :my-context :my-state :my-key)
+  ; (dissoc-state! :my-context :my-state :my-key :my-nested-key ...)
   [context-id state-id & keys]
   (swap! state/COMMON-STATE dissoc-in (vector/cons-item keys state-id context-id)))
