@@ -20,7 +20,11 @@
   ; (update-state! :my-context :my-state merge {...})
   [context-id state-id f & params]
   (letfn [(f0 [%] (apply f % params))]
-         (swap! state/COMMON-STATE update-in [context-id state-id] f0)))
+         (let [state (-> state/COMMON-STATE deref (get-in [context-id state-id]))
+               state (-> state f0)]
+              (if (-> state nil?)
+                  (-> state/COMMON-STATE (swap! dissoc-in [context-id state-id]))
+                  (-> state/COMMON-STATE (swap! assoc-in  [context-id state-id] state))))))
 
 (defn assoc-state!
   ; @description
@@ -28,8 +32,8 @@
   ;
   ; @param (*) context-id
   ; @param (*) state-id
-  ; @param (list of *)(opt) keys
-  ; @param (*) value
+  ; @param (list of *)(opt) ks
+  ; @param (*) v
   ;
   ; @usage
   ; (assoc-state! :my-context :my-state "My value")
@@ -37,9 +41,12 @@
   ; @usage
   ; (assoc-state! :my-context :my-state :my-key :my-nested-key ... "My value")
   [context-id state-id & ksnv]
-  (swap! state/COMMON-STATE assoc-in (-> ksnv (vector/remove-last-item)
-                                              (vector/cons-item state-id context-id))
-                                     (-> ksnv (vector/last-item))))
+  (let [ks (-> ksnv (vector/remove-last-item))
+        ks (-> ks   (vector/cons-item state-id context-id))
+        v  (-> ksnv (vector/last-item))]
+       (if (-> v nil?)
+           (-> state/COMMON-STATE (swap! dissoc-in ks))
+           (-> state/COMMON-STATE (swap! assoc-in  ks v)))))
 
 (defn dissoc-state!
   ; @description
@@ -47,12 +54,13 @@
   ;
   ; @param (*) context-id
   ; @param (*) state-id
-  ; @param (list of *)(opt) keys
+  ; @param (list of *)(opt) ks
   ;
   ; @usage
   ; (dissoc-state! :my-context :my-state)
   ;
   ; @usage
   ; (dissoc-state! :my-context :my-state :my-key :my-nested-key ...)
-  [context-id state-id & keys]
-  (swap! state/COMMON-STATE dissoc-in (vector/cons-item keys state-id context-id)))
+  [context-id state-id & ks]
+  (let [ks (vector/cons-item ks state-id context-id)]
+       (-> state/COMMON-STATE (swap! dissoc-in ks))))

@@ -31,7 +31,7 @@
   ;
   ; @param (*) context-id
   ; @param (*) state-id
-  ; @param (list of *)(opt) keys
+  ; @param (list of *)(opt) ks
   ;
   ; @usage
   ; (get-state :my-context :my-state)
@@ -39,13 +39,13 @@
   ; {:my-key "My value"}
   ;
   ; @usage
-  ; (get-state :my-context :my-state :my-key)
+  ; (get-state :my-context :my-state :my-key :my-nested-key)
   ; =>
   ; "My value"
   ;
   ; @return (*)
-  [context-id state-id & keys]
+  [context-id state-id & ks]
   (if-let [cursor (get-cursor context-id state-id)]
-          (-> cursor             deref (get-in keys))
+          (-> cursor             deref (get-in ks))
           (-> state/COMMON-STATE deref (get-in [context-id state-id])
-                                       (get-in keys))))
+                                       (get-in ks))))
