@@ -16,10 +16,10 @@ The <strong>cljc-common-state</strong> is a simple common state handler for Cloj
 
 Check out the latest commit on the [release branch](https://github.com/mt-app-kit/cljc-common-state/tree/release).
 
-### Documentation
-
-The <strong>cljc-common-state</strong> functional documentation is [available here](https://mt-app-kit.github.io/cljc-common-state).
-
 ### Changelog
 
 You can track the changes of the <strong>cljc-common-state</strong> library [here](CHANGES.md).
+
+# Documentation
+
+The <strong>cljc-common-state</strong> functional documentation is [available here](https://mt-app-kit.github.io/cljc-common-state).
