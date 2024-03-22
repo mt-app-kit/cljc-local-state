@@ -1,8 +1,8 @@
 
 (ns common-state.side-effects
-    (:require [fruits.map.api    :refer [dissoc-in]]
-              [fruits.vector.api :as vector]
-              [common-state.state :as state]))
+    (:require [common-state.state :as state]
+              [fruits.map.api     :refer [dissoc-in]]
+              [fruits.vector.api  :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
