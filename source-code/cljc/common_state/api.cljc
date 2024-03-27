@@ -14,9 +14,10 @@
 ; This library implements a shared state managed by a common atom.
 ; Each independent state within this common atom is accessed using separate cursors,
 ; which helps avoid unintended reactions from subscriptions of other states.
- 
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
 
 ; @redirect (common-state.env/*)
 (def get-cursor env/get-cursor)
